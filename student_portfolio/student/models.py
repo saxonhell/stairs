@@ -4,6 +4,13 @@ from django.db import models
 
 
 from django.db import models
+from django.core.exceptions import ValidationError
+
+
+def validate_movie_title(value):
+    if len(value) < 3:
+        raise ValidationError('Название фильма должно содержать не менее 3 символов')
+
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)  # Название фильма

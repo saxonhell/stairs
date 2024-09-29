@@ -1,0 +1,12 @@
+<h1>{{ action|title }} {{ model_name }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">
+        {% if action == 'create' %} Create
+        {% elif action == 'update' %} Update
+        {% elif action == 'delete' %} Delete
+        {% endif %}
+    </button>
+</form>
+<a href="{% url 'home' %}">Back to Home</a>

@@ -1,0 +1,18 @@
+<!-- templates/director_list.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список режиссёров</title>
+</head>
+<body>
+    <h1>Список режиссёров</h1>
+    <ul>
+        {% for director in directors %}
+            <li>{{ director.name }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_director' %}">Добавить нового режиссёра</a>
+    <a href="{% url 'movie_list' %}">Вернуться к списку фильмов</a>
+</body>
+</html>

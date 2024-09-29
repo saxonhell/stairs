@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion List</title>
+</head>
+<body>
+    <h1>Discussions</h1>
+
+    <ul>
+        {% for discussion in discussions %}
+            <li>
+    <a href="{% url 'discussion_detail' discussion.id %}">{{ discussion.title }}</a>
+    by {{ discussion.user }}
+</li>
+        {% empty %}
+            <li>No discussions found.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_discussion' %}">Add a New Discussion</a>
+</body>
+</html>

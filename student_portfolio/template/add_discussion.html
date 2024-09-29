@@ -1,0 +1,7 @@
+<h1>Create a New Discussion</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ discussion_form.as_p }}
+    <button type="submit">Create Discussion</button>
+</form>

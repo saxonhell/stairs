@@ -13,7 +13,10 @@
                 <h3>Отзывы:</h3>
                 <ul>
                     {% for review in movie.reviews.all %}
-                        <li>{{ review.review_text }}</li>
+                        <li>
+                            <strong>{{ review.user.username }}:</strong>  <!-- Имя пользователя -->
+                            {{ review.review_text }}
+                        </li>
                         <br>
                     {% empty %}
                         <li>Нет отзывов для этого фильма.</li>
@@ -24,5 +27,6 @@
         {% endfor %}
     </ul>
     <a href="{% url 'add_movie' %}">Добавить фильм</a> | <a href="{% url 'add_review' %}">Добавить отзыв</a>
+    <a href="{% url 'director_list' %}">Список режиссёров</a>
 </body>
 </html>

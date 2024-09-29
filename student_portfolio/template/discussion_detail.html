@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Details</title>
+</head>
+<body>
+    <h1>{{ discussion.title }}</h1>
+    <p><strong>Started by:</strong> {{ discussion.user.username }}</p>
+
+    <h2>Comments</h2>
+    <ul>
+    {% for comment in comments %}
+        <li><strong>{{ comment.user.username }}:</strong> {{ comment.comment_text }}</li>
+    {% empty %}
+        <li>No comments yet.</li>
+    {% endfor %}
+</ul>
+
+    <h2>Add a Comment</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+
+    <a href="{% url 'discussion_list' %}">Back to Discussions</a>
+</body>
+</html>

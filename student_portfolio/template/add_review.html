@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Добавить отзыв</title>
-</head>
-<body>
-    <h1>Добавить отзыв</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Добавить</button>
-    </form>
-</body>
-</html>
+<h1>Add a Review</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ review_form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>

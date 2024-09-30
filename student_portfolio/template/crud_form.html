@@ -1,11 +1,8 @@
-<h1>{{ action|title }} {{ model_name }}</h1>
-<form method="POST">
+<!-- templates/crud_form.html -->
+<h1>{{ action|capfirst }} {{ model_name }}</h1>
+<form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">
-        {% if action == 'create' %} Create
-        {% elif action == 'update' %} Update
-        {% endif %}
-    </button>
+    <button type="submit">{{ action|capfirst }}</button>
 </form>
-<a href="{% url 'crud_operations' %}?model={{ model_name }}">Back to List</a>
+<a href="{% url 'crud_operations' %}?action=read&model={{ model_name }}">Отмена</a>

@@ -57,8 +57,8 @@ def most_discussed_director(request):
 
 
 def handle_crud_operations(request):
-    action = request.GET.get('action', 'read')  # Определяем операцию по параметру GET, по умолчанию - read
-    model_name = request.GET.get('model', 'Movie')  # Определяем модель по параметру GET, по умолчанию - Movie
+    action = request.GET.get('action', 'read')  # по умолчанию - read
+    model_name = request.GET.get('model', 'Movie')  # по умолчанию - Movie
     obj_id = request.GET.get('id')  # ID объекта для операций update/delete
 
     # Определяем модель по имени
@@ -68,6 +68,7 @@ def handle_crud_operations(request):
         'Discussion': Discussion,
         'Comment': Comment,
         'User': User,
+        'Director': Director,
     }
 
     form_mapping = {
@@ -75,7 +76,8 @@ def handle_crud_operations(request):
         'Review': ReviewForm,
         'Discussion': DiscussionForm,
         'Comment': CommentForm,
-        'User': UserForm,  # Добавляем UserForm
+        'User': UserForm,
+        'Director': DirectorForm,
     }
 
     # Проверяем, что модель существует в нашем маппинге
@@ -92,15 +94,14 @@ def handle_crud_operations(request):
             if form.is_valid():
                 obj = form.save(commit=False)
 
-                # Для комментария получаем user_name
-                if model_name == 'Comment':
-                    user_name = form.cleaned_data['user_name']
-                    # Ищем пользователя по имени или создаем нового
-                    user, created = User.objects.get_or_create(username=user_name)
-                    obj.user = user  # Привязываем пользователя к комментарию
+                if model_name in ['Comment', 'Discussion', 'Review']:
+                    user_name = form.cleaned_data.get('user_name')
+                    if user_name:
+                        user, created = User.objects.get_or_create(username=user_name)
+                        obj.user = user
 
-                obj.save()  # Сохраняем объект в базу данных
-                return redirect('crud_operations')  # Перенаправляем после создания
+                obj.save()
+                return redirect('crud_operations')
         else:
             form = form_class()
         return render(request, 'crud_form.html', {'form': form, 'action': action, 'model_name': model_name})
@@ -112,17 +113,18 @@ def handle_crud_operations(request):
             form = form_class(request.POST, instance=obj)
 
             if form.is_valid():
-                # Для комментария получаем user_name
-                if model_name == 'Comment':
-                    user_name = form.cleaned_data['user_name']
-                    user, created = User.objects.get_or_create(username=user_name)
-                    obj.user = user  # Привязываем пользователя
+                if model_name in ['Comment', 'Discussion', 'Review']:
+                    user_name = form.cleaned_data.get('user_name')
+                    if user_name:
+                        user, created = User.objects.get_or_create(username=user_name)
+                        obj.user = user
 
                 form.save()
                 return redirect('crud_operations')
         else:
-            # Проверяем, что у комментария есть пользователь перед доступом к его username
-            initial_data = {'user_name': obj.user.username if obj.user else ''} if model_name == 'Comment' else {}
+            initial_data = {}
+            if model_name in ['Comment', 'Discussion', 'Review'] and obj.user:
+                initial_data['user_name'] = obj.user.username
             form = form_class(instance=obj, initial=initial_data)
 
         return render(request, 'crud_form.html', {'form': form, 'action': action, 'model_name': model_name})
@@ -131,13 +133,13 @@ def handle_crud_operations(request):
         obj = get_object_or_404(model_class, id=obj_id)
         if request.method == 'POST':
             obj.delete()
-            return redirect('crud_operations')  # Перенаправляем после удаления
+            return redirect('crud_operations')
         return render(request, 'crud_delete_confirm.html', {'obj': obj, 'model_name': model_name})
 
     else:
-        # Чтение (read): Показываем список всех объектов
         objects = model_class.objects.all()
         return render(request, 'crud_list.html', {'objects': objects, 'model_name': model_name})
+
 
 
 # Представление для создания обсуждения

@@ -1,24 +1,14 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ movie.title }}</title>
-</head>
-<body>
-    <h1>{{ movie.title }}</h1>
-    <p>{{ movie.description }}</p>
-
-    <h2>Отзывы</h2>
-    <ul>
-        {% for review in reviews %}
-            <li>{{ review.review_text }}</li>
-        {% empty %}
-            <li>Нет отзывов для этого фильма.</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+<h1>{{ movie.title }}</h1>
+<p>{{ movie.description }}</p>
+<h2>Отзывы</h2>
+<ul>
+    {% for review in reviews %}
+        <li>{{ review.review_text }}</li>
+    {% empty %}
+        <li>Нет отзывов для этого фильма.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'movie_list' %}">Вернуться к списку фильмов</a>

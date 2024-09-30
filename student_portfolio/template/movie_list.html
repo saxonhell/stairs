@@ -2,35 +2,15 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Список фильмов</title>
-</head>
-<body>
-    <h1>Список фильмов</h1>
-    <ul>
-        {% for movie in movies %}
-            <li>
-                <strong>{{ movie.title }}</strong> - {{ movie.description }}
-                <h3>Отзывы:</h3>
-                <ul>
-                    {% for review in movie.reviews.all %}
-                        <li>
-                            <strong>{{ review.user.username }}:</strong>  <!-- Имя пользователя -->
-                            {{ review.review_text }}
-                        </li>
-                        <br>
-                    {% empty %}
-                        <li>Нет отзывов для этого фильма.</li>
-                    {% endfor %}
-                </ul>
-            </li>
-    <hr>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'crud_operations' %}?action=create&model=Movie">Добавить фильм</a> | <a href="{% url 'crud_operations' %}?action=create&model=Review">Добавить отзыв</a>
-    | <a href="{% url 'director_list' %}">Список режиссёров</a>
-</body>
-</html>
+<h1>Список фильмов</h1>
+<ul>
+    {% for movie in movies %}
+        <li>
+            <strong>{{ movie.title }}</strong> - {{ movie.description }}
+            <a href="{% url 'movie_detail' movie.id %}">Подробнее</a> |
+            <a href="{% url 'movie_update' movie.id %}">Редактировать</a> |
+            <a href="{% url 'movie_delete' movie.id %}">Удалить</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'movie_create' %}">Добавить новый фильм</a>

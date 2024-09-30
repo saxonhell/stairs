@@ -8,6 +8,10 @@ from django.db.models import Count, Q
 from django.utils import timezone
 from datetime import datetime, timedelta
 
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic.detail import DetailView
+from django.urls import reverse_lazy
+
 def director_list(request):
     directors = Director.objects.all()
     return render(request, 'director_list.html', {'directors': directors})
@@ -180,3 +184,42 @@ def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)  # Получаем фильм по ID или возвращаем 404
     reviews = movie.reviews.all()  # Получаем все отзывы для данного фильма
     return render(request, 'movie_detail.html', {'movie': movie, 'reviews': reviews})
+
+
+
+
+class MovieListView(ListView):
+    model = Movie
+    template_name = 'movie_list.html'
+    context_object_name = 'movies'
+
+# 2. Детали фильма
+class MovieDetailView(DetailView):
+    model = Movie
+    template_name = 'movie_detail.html'
+    context_object_name = 'movie'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['reviews'] = self.object.reviews.all()  # Передаем отзывы
+        return context
+
+# 3. Создание фильма
+class MovieCreateView(CreateView):
+    model = Movie
+    form_class = MovieForm
+    template_name = 'crud_form.html'
+    success_url = reverse_lazy('movie_list')  # После создания фильма возвращаемся на список
+
+# 4. Обновление фильма
+class MovieUpdateView(UpdateView):
+    model = Movie
+    form_class = MovieForm
+    template_name = 'crud_form.html'
+    success_url = reverse_lazy('movie_list')
+
+# 5. Удаление фильма
+class MovieDeleteView(DeleteView):
+    model = Movie
+    template_name = 'crud_delete_confirm.html'
+    success_url = reverse_lazy('movie_list')

@@ -1,10 +1,12 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
 <!-- templates/crud_form.html -->
-<h1>{{ action|capfirst }} {{ model_name }}</h1>
+
+
+<h1>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %}</h1>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">{{ action|capfirst }}</button>
+    <button type="submit">Сохранить</button>
 </form>
-<a href="{% url 'crud_operations' %}?action=read&model={{ model_name }}">Отмена</a>
+<a href="{% url 'movie_list' %}">Отмена</a>

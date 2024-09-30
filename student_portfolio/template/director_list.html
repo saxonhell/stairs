@@ -12,7 +12,7 @@
             <li>{{ director.name }}</li>
         {% endfor %}
     </ul>
-    <a href="{% url 'add_director' %}">Добавить нового режиссёра</a>
+    <a href="{% url 'crud_operations' %}?action=create&model=Director">Добавить нового режиссёра</a>
     <a href="{% url 'movie_list' %}">Вернуться к списку фильмов</a>
 </body>
 </html>

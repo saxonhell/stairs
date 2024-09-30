@@ -26,7 +26,7 @@
     <hr>
         {% endfor %}
     </ul>
-    <a href="{% url 'add_movie' %}">Добавить фильм</a> | <a href="{% url 'add_review' %}">Добавить отзыв</a>
+    <a href="{% url 'crud_operations' %}?action=create&model=Movie">Добавить фильм</a> | <a href="{% url 'crud_operations' %}?action=create&model=Review">Добавить отзыв</a>
     <a href="{% url 'director_list' %}">Список режиссёров</a>
 </body>
 </html>

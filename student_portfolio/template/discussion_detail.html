@@ -17,14 +17,8 @@
         <li>No comments yet.</li>
     {% endfor %}
 </ul>
-
-    <h2>Add a Comment</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Comment</button>
-    </form>
-
-    <a href="{% url 'discussion_list' %}">Back to Discussions</a>
+<a href="{% url 'crud_operations' %}?action=create&model=Comment">Добавить комментарий</a>
+    <br>
+<a href="{% url 'discussion_list' %}">Вернутся к обсуждениям</a>
 </body>
 </html>

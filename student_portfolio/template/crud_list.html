@@ -1,3 +1,5 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
 <h1>{{ model_name }} List</h1>
 <a href="{% url 'crud_operations' %}?model={{ model_name }}&action=create">Create New {{ model_name }}</a>
 <ul>
@@ -5,7 +7,7 @@
         <li>
             {{ obj }}
             <a href="{% url 'crud_operations' %}?model={{ model_name }}&action=update&id={{ obj.id }}">Edit</a> |
-            <a href="{% url 'crud_operations' %}?model={{ model_name }}&action=delete&id={{ obj.id }}">Delete</a>
+            | <a href="{% url 'crud_operations' %}?model={{ model_name }}&action=delete&id={{ obj.id }}">Delete</a>
         </li>
     {% endfor %}
 </ul>

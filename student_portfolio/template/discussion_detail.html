@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +20,6 @@
     {% endfor %}
 </ul>
 <a href="{% url 'crud_operations' %}?action=create&model=Comment">Добавить комментарий</a>
-    <br>
-<a href="{% url 'discussion_list' %}">Вернутся к обсуждениям</a>
+| <a href="{% url 'discussion_list' %}">Вернутся к обсуждениям</a>
 </body>
 </html>

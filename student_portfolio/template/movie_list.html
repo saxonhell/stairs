@@ -1,3 +1,7 @@
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -27,6 +31,6 @@
         {% endfor %}
     </ul>
     <a href="{% url 'crud_operations' %}?action=create&model=Movie">Добавить фильм</a> | <a href="{% url 'crud_operations' %}?action=create&model=Review">Добавить отзыв</a>
-    <a href="{% url 'director_list' %}">Список режиссёров</a>
+    | <a href="{% url 'director_list' %}">Список режиссёров</a>
 </body>
 </html>

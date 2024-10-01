@@ -4,6 +4,7 @@ from django.urls import path
 from . import views
 from .views import handle_crud_operations, MovieListView, MovieDetailView, MovieCreateView, MovieUpdateView, \
     MovieDeleteView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.student_detail, name='student_detail'),
@@ -21,4 +22,10 @@ urlpatterns = [
     path('movie/update/<int:pk>/', MovieUpdateView.as_view(), name='movie_update'),
     path('movie/delete/<int:pk>/', MovieDeleteView.as_view(), name='movie_delete'),
 
+
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('signup/', views.signup, name='signup'),
+    path('comment/update/<int:pk>/', views.CommentUpdateView.as_view(), name='comment_update'),
+    path('comment/delete/<int:pk>/', views.CommentDeleteView.as_view(), name='comment_delete'),
 ]

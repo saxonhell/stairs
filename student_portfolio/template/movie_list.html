@@ -1,7 +1,6 @@
+{% extends 'base.html' %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
-
+{% block content %}
 <h1>Список фильмов</h1>
 <ul>
     {% for movie in movies %}
@@ -14,3 +13,4 @@
     {% endfor %}
 </ul>
 <a href="{% url 'movie_create' %}">Добавить новый фильм</a>
+{% endblock %}

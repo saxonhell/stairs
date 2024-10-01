@@ -1,25 +1,32 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+<!-- templates/discussion_detail.html -->
+{% extends "base.html" %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discussion Details</title>
-</head>
-<body>
-    <h1>{{ discussion.title }}</h1>
-    <p><strong>Started by:</strong> {{ discussion.user.username }}</p>
+{% block content %}
+  <h2>{{ discussion.title }}</h2>
+  <p>Фильм: {{ discussion.movie }}</p>
+  <p>Создано: {{ discussion.created_at }}</p>
 
-    <h2>Comments</h2>
-    <ul>
-    {% for comment in comments %}
-        <li><strong>{{ comment.user.username }}:</strong> {{ comment.comment_text }}</li>
-    {% empty %}
-        <li>No comments yet.</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'crud_operations' %}?action=create&model=Comment">Добавить комментарий</a>
-| <a href="{% url 'discussion_list' %}">Вернутся к обсуждениям</a>
-</body>
-</html>
+  <h3>Комментарии:</h3>
+  {% for comment in comments %}
+    <div>
+      <strong>{{ comment.user.username }}</strong>: {{ comment.comment_text }}
+      {% if user == comment.user %}
+        <a href="{% url 'comment_update' comment.id %}">Редактировать</a>
+        <a href="{% url 'comment_delete' comment.id %}">Удалить</a>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>Нет комментариев.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <h3>Добавить комментарий:</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Добавить</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}?next={{ request.path }}">Войдите</a>, чтобы добавить комментарий.</p>
+  {% endif %}
+{% endblock %}

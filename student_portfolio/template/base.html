@@ -1,0 +1,36 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <title>Кино Портфолио</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'student_detail' %}" class="{% if request.resolver_match.url_name == 'student_detail' %}active{% endif %}">Главная</a>
+            <a href="{% url 'movie_list' %}">Фильмы</a>
+            <a href="{% url 'director_list' %}">Режиссёры</a>
+            <a href="{% url 'discussion_list' %}">Обсуждения</a>
+        </div>
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <span class="welcome-message">Привет, {{ user.username }}</span>
+                <!-- Форма для выхода -->
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'signup' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </nav>
+    <hr>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

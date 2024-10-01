@@ -1,8 +1,6 @@
+{% extends 'base.html' %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
-
-
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,3 +19,5 @@
     <a href="{% url 'movie_list' %}">Назад к списку фильмов</a>
 </body>
 </html>
+
+{% endblock %}

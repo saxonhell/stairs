@@ -1,6 +1,7 @@
-<!-- templates/director_list.html -->
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+{% extends 'base.html' %}
+
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,3 +18,4 @@
     | <a href="{% url 'movie_list' %}">Вернуться к списку фильмов</a>
 </body>
 </html>
+{% endblock %}

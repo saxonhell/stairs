@@ -27,6 +27,12 @@ STATICFILES_DIRS = [
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-i-aikq_+f)&(&4m4ba!@0vc^a2oob)=4(yz&!ww^af=ho5lop#'
 
+
+AUTH_USER_MODEL = 'student.CustomUser'
+LOGIN_REDIRECT_URL = 'student_detail'
+LOGOUT_REDIRECT_URL = 'login'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

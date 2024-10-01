@@ -1,6 +1,6 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+{% extends 'base.html' %}
 
+{% block content %}
 <h1>{{ action|title }} {{ model_name }}</h1>
 <form method="POST">
     {% csrf_token %}
@@ -13,3 +13,5 @@
     </button>
 </form>
 <a href="{% url 'home' %}">Back to Home</a>
+
+{% endblock %}

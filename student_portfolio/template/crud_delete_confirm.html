@@ -1,8 +1,10 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>Вы уверены, что хотите удалить "{{ object.title }}"?</h1>
 <form method="post">
     {% csrf_token %}
     <button type="submit">Удалить</button>
 </form>
 <a href="{% url 'movie_list' %}">Отмена</a>
+{% endblock %}

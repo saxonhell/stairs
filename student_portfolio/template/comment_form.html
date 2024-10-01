@@ -1,0 +1,26 @@
+<!-- templates/comment_form.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Редактировать комментарий</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+          <div class="error">
+            {{ field.errors }}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit">Сохранить изменения</button>
+  </form>
+{% endblock %}

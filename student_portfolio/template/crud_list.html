@@ -1,5 +1,6 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>{{ model_name }} List</h1>
 <a href="{% url 'crud_operations' %}?model={{ model_name }}&action=create">Create New {{ model_name }}</a>
 <ul>
@@ -11,3 +12,4 @@
         </li>
     {% endfor %}
 </ul>
+{% endblock %}

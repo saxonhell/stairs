@@ -1,12 +1,39 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
 <!-- templates/crud_form.html -->
+{% extends "base.html" %}
 
-
-<h1>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %}</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
-<a href="{% url 'movie_list' %}">Отмена</a>
+{% block content %}
+    <h2>
+        {% if action == 'create' %}
+            Создание {{ model_name }}
+        {% elif action == 'update' %}
+            Обновление {{ model_name }}
+        {% endif %}
+    </h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">
+            {% if action == 'create' %}
+                Создать
+            {% elif action == 'update' %}
+                Обновить
+            {% endif %}
+        </button>
+    </form>
+    <a href="{% url 'crud_operations' %}?action=read&model={{ model_name }}">Назад</a>
+{% endblock %}

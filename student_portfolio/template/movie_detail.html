@@ -1,6 +1,6 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
+{% extends 'base.html' %}
 
+{% block content %}
 <h1>{{ movie.title }}</h1>
 <p>{{ movie.description }}</p>
 <h2>Отзывы</h2>
@@ -12,3 +12,4 @@
     {% endfor %}
 </ul>
 <a href="{% url 'movie_list' %}">Вернуться к списку фильмов</a>
+{% endblock %}

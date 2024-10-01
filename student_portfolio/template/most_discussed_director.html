@@ -1,8 +1,6 @@
-<!-- templates/most_discussed_director.html -->
+{% extends 'base.html' %}
 
-{% load static %}
-<link rel="stylesheet" href="{% static 'style.css' %}">
-
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,3 +25,4 @@
     {% endif %}
 </body>
 </html>
+{% endblock %}

@@ -3,8 +3,22 @@ from .models import Movie, Review, Discussion, Comment, User, Director
 
 class MovieForm(forms.ModelForm):
     class Meta:
-        model = Movie
-        fields = ['title', 'description', 'director']
+        model = Movie  # Указываем модель, для которой создаем форму
+        fields = ['title', 'description', 'director']  # Указываем поля, которые хотим отображать на форме
+
+    # Валидация для поля title
+    def clean_title(self):
+        title = self.cleaned_data.get('title')
+        if len(title) < 3:
+            raise forms.ValidationError("Название фильма должно содержать не менее 3 символов.")
+        return title
+
+    # Валидация для поля description
+    def clean_description(self):
+        description = self.cleaned_data.get('description')
+        if len(description) < 5:
+            raise forms.ValidationError("Описание фильма должно содержать не менее 5 символов.")
+        return description
 
 class DirectorForm(forms.ModelForm):
     class Meta:

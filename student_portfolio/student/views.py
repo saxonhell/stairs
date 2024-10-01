@@ -204,18 +204,18 @@ class MovieDetailView(DetailView):
         context['reviews'] = self.object.reviews.all()  # Передаем отзывы
         return context
 
-# 3. Создание фильма
+# Представление для создания фильма
 class MovieCreateView(CreateView):
     model = Movie
     form_class = MovieForm
-    template_name = 'crud_form.html'
-    success_url = reverse_lazy('movie_list')  # После создания фильма возвращаемся на список
+    template_name = 'movie_form.html'
+    success_url = reverse_lazy('movie_list')  # После успешного создания фильма перенаправляем на список фильмов
 
-# 4. Обновление фильма
+# Представление для редактирования фильма
 class MovieUpdateView(UpdateView):
     model = Movie
     form_class = MovieForm
-    template_name = 'crud_form.html'
+    template_name = 'movie_form.html'
     success_url = reverse_lazy('movie_list')
 
 # 5. Удаление фильма

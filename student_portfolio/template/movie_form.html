@@ -1,0 +1,23 @@
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} фильм</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Редактировать{% else %}Создать{% endif %} фильм</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Выводим форму -->
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <a href="{% url 'movie_list' %}">Назад к списку фильмов</a>
+</body>
+</html>
